@@ -96,9 +96,8 @@ const { useState, useEffect, useCallback, useRef, createElement: h, Fragment } =
 const GRID = 10;
 const FAST = 2000;
 const SLOW = 4000;
-const MIN_ATT = 3;
+const MIN_ATT = 1;
 const SPRINT_N = 20;
-const FOCUS_N = 10;
 const SKEY = "einmaleins_v2";
 
 // ─── Data ───
@@ -163,9 +162,7 @@ function NumPad({value,onInput,onDel,onOk,disabled}) {
 }
 
 // ─── Heatmap ───
-function Heatmap({data,onSprint,onFocus,onCell}) {
-  const wk = weakPairs(data,FOCUS_N).filter(([a,b])=>{const s=status(stats(data,a,b));return s!=="fast";}).length;
-  
+function Heatmap({data,onSprint,onCell}) {
   // Count mastered
   const mastered = allPairs().filter(([a,b])=>status(stats(data,a,b))==="fast").length;
   const total = allPairs().length;
@@ -205,9 +202,8 @@ function Heatmap({data,onSprint,onFocus,onCell}) {
           h("div",{style:{width:13,height:13,borderRadius:4,background:c}}),
           h("span",{style:{fontSize:12,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},l)))),
     // Buttons
-    h("div",{style:{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}},
-      h("button",{onClick:onSprint,style:btnS("var(--c-accent)")},"🏃 Sprint"),
-      h("button",{onClick:onFocus,disabled:wk===0,style:{...btnS("var(--c-orange)"),opacity:wk===0?.35:1}},"🎯 Fokus")),
+    h("div",{style:{display:"flex",justifyContent:"center"}},
+      h("button",{onClick:onSprint,style:btnS("var(--c-accent)")},"🏃 Sprint starten")),
     // Reset
     h("div",{style:{textAlign:"center",marginTop:24}},
       h("button",{onClick:()=>{if(confirm("Alle Fortschritte zurücksetzen?")){localStorage.removeItem(SKEY);location.reload();}},
@@ -243,6 +239,8 @@ function Quiz({initQ,data,setData,mode,onDone}) {
   const [retry,setRetry]=useState([]);
   const [done,setDone]=useState(false);
   const [ck,setCk]=useState(0);
+  const [phase,setPhase]=useState("main"); // "main" or "retry"
+  const origCount=useRef(initQ.length);
   const timer=useRef(null);
 
   useEffect(()=>{setT0(Date.now());},[idx,q.length]);
@@ -253,26 +251,35 @@ function Quiz({initQ,data,setData,mode,onDone}) {
     const nd=record(data,a,b,ms,ok); setData(nd); save(nd);
     const r={a,b,ans:parseInt(inp),correct:ok,time:ms};
     setRes(prev=>[...prev,r]);
-    if(!ok) setRetry(prev=>[...prev,[a,b]]);
+    if(!ok && phase==="main") setRetry(prev=>[...prev,[a,b]]);
     setFb(ok?"ok":"no");
     if(ok) setCk(c=>c+1);
     timer.current=setTimeout(()=>{
       setFb(null); setInp("");
       const nextIdx=idx+1;
-      if(nextIdx<q.length){setIdx(nextIdx);}
-      else {
+      if(nextIdx<q.length){
+        setIdx(nextIdx);
+      } else if(phase==="main") {
+        // End of main round — add retry round if there are wrong answers
         const rq=[...retry,...(ok?[]:[[a,b]])];
         if(rq.length>0){
           setQ(prev=>[...prev,...rq.map(([x,y])=>Math.random()>.5?[y,x]:[x,y])]);
-          setRetry([]); setIdx(nextIdx);
+          setRetry([]); setPhase("retry"); setIdx(nextIdx);
         } else { setDone(true); }
+      } else {
+        // End of retry round — done, no further retries
+        setDone(true);
       }
     },ok?450:1600);
-  },[inp,q,idx,t0,data,retry,fb]);
+  },[inp,q,idx,t0,data,retry,fb,phase]);
 
   if(done) return Result({res,mode,onDone});
   if(!q[idx]) return null;
   const [a,b]=q[idx];
+  // Progress: in main phase show idx/origCount, in retry phase show progress through retries
+  const displayIdx = phase==="main" ? idx+1 : idx-origCount.current+1;
+  const displayTotal = phase==="main" ? origCount.current : q.length-origCount.current;
+  const progressPct = phase==="main" ? ((idx+1)/origCount.current*100) : ((idx-origCount.current+1)/(q.length-origCount.current)*100);
 
   return h("div",{style:{padding:"env(safe-area-inset-top,20px) 16px 20px",maxWidth:420,margin:"0 auto",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",minHeight:"100dvh",gap:10}},
     h(Confetti,{trigger:ck}),
@@ -280,11 +287,11 @@ function Quiz({initQ,data,setData,mode,onDone}) {
     h("div",{style:{width:"100%",display:"flex",alignItems:"center",gap:12,marginBottom:4}},
       h("button",{onClick:()=>{clearTimeout(timer.current);onDone();},style:{background:"none",border:"none",fontSize:22,cursor:"pointer",color:"var(--c-text-dim)",padding:4}},"←"),
       h("div",{style:{flex:1,height:6,borderRadius:3,background:"var(--c-surface-alt)",overflow:"hidden"}},
-        h("div",{style:{height:"100%",borderRadius:3,background:"var(--c-accent)",width:((idx+1)/q.length*100)+"%",transition:"width .3s"}})),
-      h("span",{style:{fontSize:13,fontWeight:600,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif",minWidth:48,textAlign:"right"}},(idx+1)+"/"+q.length)),
+        h("div",{style:{height:"100%",borderRadius:3,background:phase==="retry"?"var(--c-orange)":"var(--c-accent)",width:Math.min(progressPct,100)+"%",transition:"width .3s"}})),
+      h("span",{style:{fontSize:13,fontWeight:600,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif",minWidth:48,textAlign:"right"}},displayIdx+"/"+displayTotal)),
     // Mode
-    h("div",{style:{fontSize:12,fontWeight:600,letterSpacing:1.5,color:mode==="focus"?"var(--c-orange)":"var(--c-accent)",fontFamily:"'DM Sans',sans-serif",textTransform:"uppercase"}},
-      mode==="focus"?"🎯 Fokus":"🏃 Sprint"),
+    h("div",{style:{fontSize:12,fontWeight:600,letterSpacing:1.5,color:phase==="retry"?"var(--c-orange)":mode==="focus"?"var(--c-orange)":"var(--c-accent)",fontFamily:"'DM Sans',sans-serif",textTransform:"uppercase"}},
+      phase==="retry"?"🔄 Korrektur":mode==="focus"?"🎯 Fokus":"🏃 Sprint"),
     // Task
     h("div",{key:idx,style:{fontSize:56,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)",margin:"8px 0",animation:"fadeInUp .2s ease"}},a+" × "+b),
     // Answer
@@ -344,9 +351,8 @@ function App() {
 
   return h("div",{style:{minHeight:"100dvh",background:"var(--c-bg)"}},
     scr==="map"&&h(Heatmap,{data,onSprint:()=>{setQq(sprintQ(data,SPRINT_N));setScr("sprint");},
-      onFocus:()=>{const w=weakPairs(data,FOCUS_N);setQq(w.map(([a,b])=>Math.random()>.5?[b,a]:[a,b]));setScr("focus");},
       onCell:(a,b)=>setDet([a,b])}),
-    (scr==="sprint"||scr==="focus")&&h(Quiz,{key:scr+qq.length,initQ:qq,data,setData,mode:scr,onDone:()=>setScr("map")}),
+    scr==="sprint"&&h(Quiz,{key:"sprint"+qq.length,initQ:qq,data,setData,mode:"sprint",onDone:()=>setScr("map")}),
     det&&h(Detail,{a:det[0],b:det[1],data,onClose:()=>setDet(null)}));
 }
 
