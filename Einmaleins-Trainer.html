@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)file:///Users/johanneswidmer/Downloads/index.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="1×1 Trainer">
+<meta name="theme-color" content="#1A1A2E" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F5F3FF" media="(prefers-color-scheme: light)">
+<title>Einmaleins-Trainer</title>
+
+<!-- PWA Manifest inline via data URI -->
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRWlubWFsZWlucy1UcmFpbmVyIiwic2hvcnRfbmFtZSI6IjHDlzEgVHJhaW5lciIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMUExQTJFIiwidGhlbWVfY29sb3IiOiIjNkM2M0ZGIn0=">
+
+<!-- Apple Touch Icon (inline SVG as data URI) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjNkM2M0ZGIi8+PHRleHQgeD0iOTAiIHk9IjEwNSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNzAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4xw5cxPC90ZXh0Pjwvc3ZnPg==">
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./Einmaleins-Trainer_files/css2" rel="stylesheet">
+
+<style>
+  :root {
+    --c-bg: #1A1A2E;
+    --c-surface: #25254a;
+    --c-surface-alt: #33335a;
+    --c-text: #E8E8F0;
+    --c-text-dim: #9090B0;
+    --c-accent: #6C63FF;
+    --c-green: #34D399;
+    --c-green-text: #064E3B;
+    --c-yellow: #FCD34D;
+    --c-yellow-text: #78350F;
+    --c-red: #FB7185;
+    --c-red-text: #881337;
+    --c-orange: #FB923C;
+    --c-gray: #3a3a5c;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --c-bg: #F5F3FF;
+      --c-surface: #FFFFFF;
+      --c-surface-alt: #EDE9FE;
+      --c-text: #1E1B4B;
+      --c-text-dim: #6B7280;
+      --c-accent: #6C63FF;
+      --c-green: #A7F3D0;
+      --c-green-text: #065F46;
+      --c-yellow: #FDE68A;
+      --c-yellow-text: #78350F;
+      --c-red: #FECDD3;
+      --c-red-text: #9F1239;
+      --c-orange: #FDBA74;
+      --c-gray: #E5E7EB;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { 
+    overscroll-behavior: none; 
+    background: var(--c-bg);
+    font-family: 'DM Sans', sans-serif;
+    height: 100%;
+    overflow: hidden;
+  }
+  #root { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translateY(140px) rotate(400deg) scale(0.2); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body style="overscroll-behavior-x: auto;">
+<div id="root"><div style="min-height: 100dvh; background: var(--c-bg);"><div style="padding: env(safe-area-inset-top, 20px) 16px 20px; max-width: 700px; margin: 0px auto;"><div style="text-align: center; margin-bottom: 20px; animation: 0.4s ease 0s 1 normal none running fadeInUp;"><h1 style="font-family: Fredoka, sans-serif; font-size: 30px; font-weight: 600; color: var(--c-text); margin: 16px 0px 2px;">Einmaleins-Trainer</h1></div><div style="margin-bottom: 20px; animation: 0.5s ease 0s 1 normal none running fadeInUp;"><div style="display: grid; grid-template-columns: 30px repeat(10, 1fr); grid-template-rows: 26px repeat(10, 1fr); gap: 3px;"><div style="display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">×</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">1</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">2</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">3</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">4</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">5</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">6</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">7</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">8</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">9</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">10</div><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">1</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">1</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">2</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">3</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">4</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">5</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">6</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">7</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">8</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">9</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">10</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">2</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">2</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">4</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">6</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">8</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">10</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">12</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">14</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">16</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">18</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">20</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">3</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">3</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">6</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">9</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">12</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">15</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">18</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">21</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">24</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">27</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">30</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">4</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">4</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">8</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">12</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">16</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">20</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">24</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">28</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">32</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">36</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">40</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">5</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">5</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">10</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">15</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">20</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">25</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">30</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">35</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">40</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">45</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">50</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">6</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">6</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">12</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">18</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">24</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">30</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">36</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">42</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">48</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">54</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">60</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">7</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">7</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">14</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">21</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">28</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">35</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">42</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">49</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">56</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">63</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">70</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">8</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">8</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">16</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">24</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">32</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">40</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">48</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">56</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">64</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">72</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">80</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">9</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">9</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">18</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">27</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">36</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">45</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s; transform: scale(1);">54</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">63</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">72</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">81</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">90</button><div style="display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">10</div><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">10</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">20</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">30</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">40</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">50</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">60</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">70</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">80</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">90</button><button style="aspect-ratio: 1 / 1; border-radius: 6px; border: none; background: var(--c-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif; cursor: pointer; transition: transform 0.12s;">100</button></div></div><div style="display: flex; gap: 14px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;"><div style="display: flex; align-items: center; gap: 5px;"><div style="width: 13px; height: 13px; border-radius: 4px; background: var(--c-green);"></div><span style="font-size: 12px; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">Sitzt!</span></div><div style="display: flex; align-items: center; gap: 5px;"><div style="width: 13px; height: 13px; border-radius: 4px; background: var(--c-yellow);"></div><span style="font-size: 12px; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">Fast</span></div><div style="display: flex; align-items: center; gap: 5px;"><div style="width: 13px; height: 13px; border-radius: 4px; background: var(--c-red);"></div><span style="font-size: 12px; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">Üben</span></div><div style="display: flex; align-items: center; gap: 5px;"><div style="width: 13px; height: 13px; border-radius: 4px; background: var(--c-gray);"></div><span style="font-size: 12px; color: var(--c-text-dim); font-family: &quot;DM Sans&quot;, sans-serif;">Neu</span></div></div><div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;"><button style="padding: 14px 32px; border-radius: 14px; border: none; background: var(--c-accent); color: rgb(255, 255, 255); font-size: 16px; font-weight: 700; font-family: Fredoka, sans-serif; cursor: pointer; letter-spacing: 0.3px;">🏃 Sprint</button><button style="padding: 14px 32px; border-radius: 14px; border: none; background: var(--c-orange); color: rgb(255, 255, 255); font-size: 16px; font-weight: 700; font-family: Fredoka, sans-serif; cursor: pointer; letter-spacing: 0.3px; opacity: 1;">🎯 Fokus</button></div><div style="text-align: center; margin-top: 24px;"><button style="background: none; border: none; font-size: 12px; color: var(--c-text-dim); cursor: pointer; font-family: &quot;DM Sans&quot;, sans-serif; text-decoration: underline; opacity: 0.6;">Fortschritt zurücksetzen</button></div></div></div></div>
+
+<script src="./Einmaleins-Trainer_files/react.production.min.js"></script>
+<script src="./Einmaleins-Trainer_files/react-dom.production.min.js"></script>
+
+<script>
+const { useState, useEffect, useCallback, useRef, createElement: h, Fragment } = React;
+
+// ─── Constants ───
+const GRID = 10;
+const FAST = 2000;
+const SLOW = 4000;
+const MIN_ATT = 3;
+const SPRINT_N = 20;
+const FOCUS_N = 10;
+const SKEY = "einmaleins_v2";
+
+// ─── Data ───
+function load() { try { const r = localStorage.getItem(SKEY); return r ? JSON.parse(r) : {}; } catch { return {}; } }
+function save(d) { try { localStorage.setItem(SKEY, JSON.stringify(d)); } catch {} }
+function key(a, b) { return Math.min(a,b) + "x" + Math.max(a,b); }
+function stats(d, a, b) { return d[key(a,b)] || { times: [], errors: 0, attempts: 0 }; }
+function record(d, a, b, ms, ok) {
+  const k = key(a,b), p = d[k] || { times: [], errors: 0, attempts: 0 };
+  return { ...d, [k]: { times: [...p.times, ms].slice(-5), errors: p.errors + (ok?0:1), attempts: p.attempts + 1 } };
+}
+function avg(s) { if (!s.times.length) return null; const t = s.times.slice(-3); return t.reduce((a,b)=>a+b,0)/t.length; }
+function status(s) {
+  if (s.attempts < MIN_ATT) return "unset";
+  const a = avg(s), e = s.errors / s.attempts;
+  if (e > 0.3 || a > SLOW) return "slow";
+  if (a > FAST) return "medium";
+  return "fast";
+}
+function sColor(st) { return { fast:"var(--c-green)", medium:"var(--c-yellow)", slow:"var(--c-red)", unset:"var(--c-gray)" }[st]; }
+function sTextColor(st) { return { fast:"var(--c-green-text)", medium:"var(--c-yellow-text)", slow:"var(--c-red-text)", unset:"var(--c-text-dim)" }[st]; }
+function allPairs() { const p=[]; for(let a=1;a<=GRID;a++) for(let b=a;b<=GRID;b++) p.push([a,b]); return p; }
+function weakPairs(d, n) {
+  return allPairs().map(([a,b])=>{ const s=stats(d,a,b), av=avg(s)||99999, e=s.attempts>0?s.errors/s.attempts:0.5; return{p:[a,b],sc:av+e*5000}; })
+    .sort((a,b)=>b.sc-a.sc).slice(0,n).map(x=>x.p);
+}
+function sprintQ(d, n) {
+  const w = []; allPairs().forEach(([a,b])=>{ const st=status(stats(d,a,b)); const wt=st==="slow"?4:st==="medium"?2:st==="unset"?3:1; for(let i=0;i<wt;i++) w.push([a,b]); });
+  return Array.from({length:n}, ()=>{ const [a,b]=w[Math.floor(Math.random()*w.length)]; return Math.random()>0.5?[b,a]:[a,b]; });
+}
+function fmt(ms) { return (ms/1000).toFixed(1)+"s"; }
+
+// ─── Confetti ───
+function Confetti({trigger}) {
+  const [ps, setPs] = useState([]);
+  useEffect(()=>{ if(!trigger) return; const cols=["#4ADE80","#FACC15","#FB923C","#60A5FA","#F472B6","#A78BFA"];
+    setPs(Array.from({length:28},(_,i)=>({i,x:50+(Math.random()-.5)*70,y:40+(Math.random()-.5)*20,s:.4+Math.random(),c:cols[i%6],dl:Math.random()*.4,r:Math.random()>.5}))); 
+    const t=setTimeout(()=>setPs([]),1400); return()=>clearTimeout(t); },[trigger]);
+  if(!ps.length) return null;
+  return h("div",{style:{position:"fixed",inset:0,pointerEvents:"none",zIndex:999}},
+    ps.map(p=>h("div",{key:p.i,style:{position:"absolute",left:p.x+"%",top:p.y+"%",width:10*p.s,height:10*p.s,borderRadius:p.r?"50%":"2px",background:p.c,animation:`confettiFall 1.2s ease-out ${p.dl}s forwards`,opacity:0}})));
+}
+
+// ─── NumPad ───
+function NumPad({value,onInput,onDel,onOk,disabled}) {
+  const keys = [1,2,3,4,5,6,7,8,9,"DEL",0,"OK"];
+  function mkBtn(k) {
+    const isD=k==="DEL", isO=k==="OK", isA=isD||isO;
+    const dis = disabled||(isO&&!value);
+    return h("button",{key:k,disabled:dis,
+      onClick:()=>{ if(isD)onDel(); else if(isO)onOk(); else onInput(String(k)); },
+      onPointerDown:e=>{if(!dis)e.currentTarget.style.transform="scale(0.92)";},
+      onPointerUp:e=>{e.currentTarget.style.transform="scale(1)";},
+      onPointerLeave:e=>{e.currentTarget.style.transform="scale(1)";},
+      style:{height:62,borderRadius:14,border:"none",fontSize:isA?15:24,fontWeight:700,fontFamily:"'DM Sans',sans-serif",
+        cursor:dis?"default":"pointer",
+        background:isO?"var(--c-accent)":isD?"var(--c-surface-alt)":"var(--c-surface)",
+        color:isO?"#fff":"var(--c-text)",opacity:dis?0.35:1,transition:"transform .1s,opacity .15s",letterSpacing:isA?1:0}},
+      isD?"⌫":isO?"✓":k);
+  }
+  return h("div",{style:{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10,maxWidth:320,margin:"0 auto"}},keys.map(mkBtn));
+}
+
+// ─── Heatmap ───
+function Heatmap({data,onSprint,onFocus,onCell}) {
+  const wk = weakPairs(data,FOCUS_N).filter(([a,b])=>{const s=status(stats(data,a,b));return s!=="fast";}).length;
+  
+  // Count mastered
+  const mastered = allPairs().filter(([a,b])=>status(stats(data,a,b))==="fast").length;
+  const total = allPairs().length;
+  
+  return h("div",{style:{padding:"env(safe-area-inset-top, 20px) 16px 20px",maxWidth:700,margin:"0 auto"}},
+    h("div",{style:{textAlign:"center",marginBottom:20,animation:"fadeInUp .4s ease"}},
+      h("h1",{style:{fontFamily:"'Fredoka',sans-serif",fontSize:30,fontWeight:600,color:"var(--c-text)",margin:"16px 0 2px"}},"Einmaleins-Trainer"),
+      mastered > 0 && h("p",{style:{fontSize:14,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif",margin:"2px 0 0"}},
+        mastered + " von " + total + " gemeistert"),
+    ),
+    // Grid
+    h("div",{style:{marginBottom:20,animation:"fadeInUp .5s ease"}},
+      h("div",{style:{display:"grid",gridTemplateColumns:"30px repeat("+GRID+",1fr)",gridTemplateRows:"26px repeat("+GRID+",1fr)",gap:3}},
+        // Corner
+        h("div",{style:{display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},"×"),
+        // Col headers
+        ...Array.from({length:GRID},(_,i)=>h("div",{key:"c"+i,style:{display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},i+1)),
+        // Rows
+        ...Array.from({length:GRID},(_,row)=>[
+          h("div",{key:"r"+row,style:{display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},row+1),
+          ...Array.from({length:GRID},(_,col)=>{
+            const a=row+1,b=col+1,s=stats(data,a,b),st=status(s);
+            return h("button",{key:a+"-"+b,onClick:()=>onCell(a,b),
+              onPointerDown:e=>{e.currentTarget.style.transform="scale(0.88)";},
+              onPointerUp:e=>{e.currentTarget.style.transform="scale(1)";},
+              onPointerLeave:e=>{e.currentTarget.style.transform="scale(1)";},
+              style:{aspectRatio:"1",borderRadius:6,border:"none",background:sColor(st),display:"flex",alignItems:"center",justifyContent:"center",
+                fontSize:11,fontWeight:600,color:sTextColor(st),fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"transform .12s"}},a*b);
+          })
+        ]).flat()
+      )
+    ),
+    // Legend
+    h("div",{style:{display:"flex",gap:14,justifyContent:"center",marginBottom:24,flexWrap:"wrap"}},
+      [["var(--c-green)","Sitzt!"],["var(--c-yellow)","Fast"],["var(--c-red)","Üben"],["var(--c-gray)","Neu"]].map(([c,l])=>
+        h("div",{key:l,style:{display:"flex",alignItems:"center",gap:5}},
+          h("div",{style:{width:13,height:13,borderRadius:4,background:c}}),
+          h("span",{style:{fontSize:12,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},l)))),
+    // Buttons
+    h("div",{style:{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}},
+      h("button",{onClick:onSprint,style:btnS("var(--c-accent)")},"🏃 Sprint"),
+      h("button",{onClick:onFocus,disabled:wk===0,style:{...btnS("var(--c-orange)"),opacity:wk===0?.35:1}},"🎯 Fokus")),
+    // Reset
+    h("div",{style:{textAlign:"center",marginTop:24}},
+      h("button",{onClick:()=>{if(confirm("Alle Fortschritte zurücksetzen?")){localStorage.removeItem(SKEY);location.reload();}},
+        style:{background:"none",border:"none",fontSize:12,color:"var(--c-text-dim)",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",textDecoration:"underline",opacity:.6}},"Fortschritt zurücksetzen"))
+  );
+}
+function btnS(bg){return{padding:"14px 32px",borderRadius:14,border:"none",background:bg,color:"#fff",fontSize:16,fontWeight:700,fontFamily:"'Fredoka',sans-serif",cursor:"pointer",letterSpacing:.3};}
+
+// ─── Cell Detail ───
+function Detail({a,b,data,onClose}) {
+  const s=stats(data,a,b),st=status(s),av=avg(s);
+  return h("div",{onClick:onClose,style:{position:"fixed",inset:0,background:"rgba(0,0,0,.45)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:100,padding:20}},
+    h("div",{onClick:e=>e.stopPropagation(),style:{background:"var(--c-bg)",borderRadius:22,padding:30,minWidth:260,maxWidth:340,textAlign:"center",boxShadow:"0 24px 60px rgba(0,0,0,.3)",animation:"slideIn .25s ease"}},
+      h("div",{style:{fontSize:40,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)",marginBottom:6}},a+" × "+b+" = "+a*b),
+      h("div",{style:{display:"inline-block",padding:"5px 16px",borderRadius:20,background:sColor(st),fontSize:13,fontWeight:600,fontFamily:"'DM Sans',sans-serif",marginBottom:18,color:sTextColor(st)}},
+        st==="fast"?"Gemeistert ✓":st==="medium"?"Fast geschafft":st==="slow"?"Noch üben":"Noch nicht geübt"),
+      h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:22}},
+        [["⌀ Zeit",av?fmt(av):"—"],["Versuche",s.attempts],["Fehler",s.errors]].map(([l,v])=>
+          h("div",{key:l},
+            h("div",{style:{fontSize:24,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)"}},v),
+            h("div",{style:{fontSize:11,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},l)))),
+      h("button",{onClick:onClose,style:{...btnS("var(--c-surface-alt)"),color:"var(--c-text)",fontSize:14,padding:"10px 28px"}},"Schließen")));
+}
+
+// ─── Quiz ───
+function Quiz({initQ,data,setData,mode,onDone}) {
+  const [q,setQ]=useState(initQ);
+  const [idx,setIdx]=useState(0);
+  const [inp,setInp]=useState("");
+  const [fb,setFb]=useState(null);
+  const [t0,setT0]=useState(Date.now());
+  const [res,setRes]=useState([]);
+  const [retry,setRetry]=useState([]);
+  const [done,setDone]=useState(false);
+  const [ck,setCk]=useState(0);
+  const timer=useRef(null);
+
+  useEffect(()=>{setT0(Date.now());},[idx,q.length]);
+
+  const submit=useCallback(()=>{
+    if(!inp||fb) return;
+    const [a,b]=q[idx], ok=parseInt(inp)===a*b, ms=Date.now()-t0;
+    const nd=record(data,a,b,ms,ok); setData(nd); save(nd);
+    const r={a,b,ans:parseInt(inp),correct:ok,time:ms};
+    setRes(prev=>[...prev,r]);
+    if(!ok) setRetry(prev=>[...prev,[a,b]]);
+    setFb(ok?"ok":"no");
+    if(ok) setCk(c=>c+1);
+    timer.current=setTimeout(()=>{
+      setFb(null); setInp("");
+      const nextIdx=idx+1;
+      if(nextIdx<q.length){setIdx(nextIdx);}
+      else {
+        const rq=[...retry,...(ok?[]:[[a,b]])];
+        if(rq.length>0){
+          setQ(prev=>[...prev,...rq.map(([x,y])=>Math.random()>.5?[y,x]:[x,y])]);
+          setRetry([]); setIdx(nextIdx);
+        } else { setDone(true); }
+      }
+    },ok?450:1600);
+  },[inp,q,idx,t0,data,retry,fb]);
+
+  if(done) return Result({res,mode,onDone});
+  if(!q[idx]) return null;
+  const [a,b]=q[idx];
+
+  return h("div",{style:{padding:"env(safe-area-inset-top,20px) 16px 20px",maxWidth:420,margin:"0 auto",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",minHeight:"100dvh",gap:10}},
+    h(Confetti,{trigger:ck}),
+    // Progress bar
+    h("div",{style:{width:"100%",display:"flex",alignItems:"center",gap:12,marginBottom:4}},
+      h("button",{onClick:()=>{clearTimeout(timer.current);onDone();},style:{background:"none",border:"none",fontSize:22,cursor:"pointer",color:"var(--c-text-dim)",padding:4}},"←"),
+      h("div",{style:{flex:1,height:6,borderRadius:3,background:"var(--c-surface-alt)",overflow:"hidden"}},
+        h("div",{style:{height:"100%",borderRadius:3,background:"var(--c-accent)",width:((idx+1)/q.length*100)+"%",transition:"width .3s"}})),
+      h("span",{style:{fontSize:13,fontWeight:600,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif",minWidth:48,textAlign:"right"}},(idx+1)+"/"+q.length)),
+    // Mode
+    h("div",{style:{fontSize:12,fontWeight:600,letterSpacing:1.5,color:mode==="focus"?"var(--c-orange)":"var(--c-accent)",fontFamily:"'DM Sans',sans-serif",textTransform:"uppercase"}},
+      mode==="focus"?"🎯 Fokus":"🏃 Sprint"),
+    // Task
+    h("div",{key:idx,style:{fontSize:56,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)",margin:"8px 0",animation:"fadeInUp .2s ease"}},a+" × "+b),
+    // Answer
+    h("div",{style:{fontSize:44,fontWeight:700,fontFamily:"'Fredoka',sans-serif",height:64,display:"flex",alignItems:"center",justifyContent:"center",
+      color:fb==="ok"?"var(--c-green-text)":fb==="no"?"var(--c-red-text)":"var(--c-text)",
+      background:fb==="ok"?"var(--c-green)":fb==="no"?"var(--c-red)":"var(--c-surface)",
+      borderRadius:18,minWidth:170,padding:"0 28px",transition:"background .2s,color .2s",
+      animation:fb?"pulse .3s ease":"none"}},
+      fb==="no"?h("span",{style:{fontSize:30}},a*b):(inp||h("span",{style:{opacity:.2}},"?"))),
+    fb==="no"&&h("div",{style:{fontSize:13,color:"var(--c-red-text)",fontFamily:"'DM Sans',sans-serif",fontWeight:600,animation:"fadeInUp .2s"}},"Richtig: "+a*b),
+    // Pad
+    h("div",{style:{marginTop:10,width:"100%",maxWidth:320}},
+      h(NumPad,{value:inp,onInput:d=>{if(!fb&&inp.length<3)setInp(inp+d);},onDel:()=>{if(!fb)setInp(inp.slice(0,-1));},onOk:submit,disabled:!!fb}))
+  );
+}
+
+// ─── Results ───
+function Result({res,mode,onDone}) {
+  const ok=res.filter(r=>r.correct), tt=res.reduce((s,r)=>s+r.time,0);
+  const at=ok.length?ok.reduce((s,r)=>s+r.time,0)/ok.length:0;
+  const slow=[...res].filter(r=>r.correct).sort((a,b)=>b.time-a.time).slice(0,3);
+  const fast=[...res].filter(r=>r.correct).sort((a,b)=>a.time-b.time).slice(0,3);
+  const allOk=ok.length===res.length;
+
+  return h("div",{style:{padding:"40px 20px",maxWidth:460,margin:"0 auto",textAlign:"center",animation:"slideIn .4s ease"}},
+    allOk&&h(Confetti,{trigger:Date.now()}),
+    h("div",{style:{fontSize:44,marginBottom:8}},allOk?"🎉":ok.length/res.length>.8?"💪":"📝"),
+    h("h2",{style:{fontFamily:"'Fredoka',sans-serif",fontSize:28,fontWeight:600,color:"var(--c-text)",margin:"0 0 4px"}},allOk?"Alles richtig!":"Geschafft!"),
+    h("p",{style:{fontFamily:"'DM Sans',sans-serif",fontSize:14,color:"var(--c-text-dim)",margin:"0 0 28px"}},(mode==="focus"?"Fokus-Training":"Sprint")+" beendet"),
+    // Stats
+    h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:30}},
+      [["Richtig",ok.length+"/"+res.length],["⌀ Zeit",fmt(at)],["Gesamt",fmt(tt)]].map(([l,v])=>
+        h("div",{key:l,style:{background:"var(--c-surface)",borderRadius:16,padding:18}},
+          h("div",{style:{fontSize:24,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)"}},v),
+          h("div",{style:{fontSize:11,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif",marginTop:3}},l)))),
+    // Slow
+    slow.length>0&&h("div",{style:{marginBottom:20,textAlign:"left"}},
+      h("h3",{style:{fontFamily:"'DM Sans',sans-serif",fontSize:13,fontWeight:700,color:"var(--c-text-dim)",marginBottom:8,letterSpacing:.5}},"🐢 Am langsamsten"),
+      slow.map((r,i)=>h("div",{key:i,style:{display:"flex",justifyContent:"space-between",padding:"10px 14px",background:"var(--c-surface)",borderRadius:12,marginBottom:5,fontFamily:"'DM Sans',sans-serif",fontSize:15}},
+        h("span",{style:{fontWeight:600,color:"var(--c-text)"}},r.a+" × "+r.b+" = "+r.a*r.b),
+        h("span",{style:{color:"var(--c-orange)",fontWeight:700}},fmt(r.time))))),
+    // Fast
+    fast.length>0&&h("div",{style:{marginBottom:30,textAlign:"left"}},
+      h("h3",{style:{fontFamily:"'DM Sans',sans-serif",fontSize:13,fontWeight:700,color:"var(--c-text-dim)",marginBottom:8,letterSpacing:.5}},"⚡ Am schnellsten"),
+      fast.map((r,i)=>h("div",{key:i,style:{display:"flex",justifyContent:"space-between",padding:"10px 14px",background:"var(--c-surface)",borderRadius:12,marginBottom:5,fontFamily:"'DM Sans',sans-serif",fontSize:15}},
+        h("span",{style:{fontWeight:600,color:"var(--c-text)"}},r.a+" × "+r.b+" = "+r.a*r.b),
+        h("span",{style:{color:"var(--c-green-text)",fontWeight:700}},fmt(r.time))))),
+    h("button",{onClick:onDone,style:btnS("var(--c-accent)")},"Zurück zur Übersicht"));
+}
+
+// ─── App ───
+function App() {
+  const [data,setData]=useState(load);
+  const [scr,setScr]=useState("map");
+  const [qq,setQq]=useState([]);
+  const [det,setDet]=useState(null);
+
+  return h("div",{style:{minHeight:"100dvh",background:"var(--c-bg)"}},
+    scr==="map"&&h(Heatmap,{data,onSprint:()=>{setQq(sprintQ(data,SPRINT_N));setScr("sprint");},
+      onFocus:()=>{const w=weakPairs(data,FOCUS_N);setQq(w.map(([a,b])=>Math.random()>.5?[b,a]:[a,b]));setScr("focus");},
+      onCell:(a,b)=>setDet([a,b])}),
+    (scr==="sprint"||scr==="focus")&&h(Quiz,{key:scr+qq.length,initQ:qq,data,setData,mode:scr,onDone:()=>setScr("map")}),
+    det&&h(Detail,{a:det[0],b:det[1],data,onClose:()=>setDet(null)}));
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+
+
+</body></html>
