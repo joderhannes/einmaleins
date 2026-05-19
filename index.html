@@ -66,7 +66,7 @@ function cellStatus(s){
   if(t===0) return "unset";
   const rate=s.correct/t;
   if(t>=3&&rate>=0.85) return "fast";
-  if(rate>=0.5) return "medium";
+  if(rate>0.6) return "medium";
   return "slow";
 }
 function sColor(c){return{fast:"var(--c-green)",medium:"var(--c-yellow)",slow:"var(--c-red)",unset:"var(--c-gray)"}[c];}
