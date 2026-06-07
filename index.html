@@ -124,7 +124,7 @@ function NumPad({value,onInput,onDel,onOk,disabled}){
 }
 
 // ─── Heatmap ───
-function Heatmap({data,onStart,onCell}){
+function Heatmap({data,onStart,onCell,showTimer,onToggleTimer}){
   const mastered=allPairs().filter(([a,b])=>cellStatus(gst(data,a,b))==="fast").length;
   const total=allPairs().length;
   return h("div",{style:{padding:"env(safe-area-inset-top,20px) 16px 20px",maxWidth:700,margin:"0 auto"}},
@@ -153,13 +153,24 @@ function Heatmap({data,onStart,onCell}){
         h("div",{key:l,style:{display:"flex",alignItems:"center",gap:5}},
           h("div",{style:{width:13,height:13,borderRadius:4,background:c}}),
           h("span",{style:{fontSize:12,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},l)))),
+    // Timer toggle
+    h("div",{style:{display:"flex",justifyContent:"center",marginBottom:20}},
+      h("button",{onClick:onToggleTimer,
+        style:{display:"flex",alignItems:"center",gap:10,padding:"10px 20px",borderRadius:12,border:"none",
+          background:"var(--c-surface)",cursor:"pointer",transition:"background .2s"}},
+        h("div",{style:{width:44,height:26,borderRadius:13,background:showTimer?"var(--c-accent)":"var(--c-surface-alt)",
+          position:"relative",transition:"background .2s",flexShrink:0}},
+          h("div",{style:{width:20,height:20,borderRadius:10,background:"#fff",position:"absolute",top:3,
+            left:showTimer?21:3,transition:"left .2s",boxShadow:"0 1px 3px rgba(0,0,0,.2)"}})),
+        h("span",{style:{fontSize:13,fontWeight:600,color:"var(--c-text-dim)",fontFamily:"'DM Sans',sans-serif"}},
+          showTimer?"Countdown sichtbar":"Countdown versteckt"))),
     h("div",{style:{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}},
       Object.entries(MODES).map(([id,m])=>
         h("button",{key:id,onClick:()=>onStart(id),
           style:{padding:"14px 24px",borderRadius:14,border:"none",background:m.color,color:"#fff",
             fontSize:15,fontWeight:700,fontFamily:"'Fredoka',sans-serif",cursor:"pointer",letterSpacing:.3,
             display:"flex",alignItems:"center",gap:8}},
-          m.icon+" "+m.label+" ("+m.time+"s)"))),
+          m.icon+" "+m.label))),
     h("div",{style:{textAlign:"center",marginTop:24}},
       h("button",{onClick:()=>{if(confirm("Alle Fortschritte zur\u00FCcksetzen?")){localStorage.removeItem(SKEY);location.reload();}},
         style:{background:"none",border:"none",fontSize:12,color:"var(--c-text-dim)",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",textDecoration:"underline",opacity:.6}},"Fortschritt zur\u00FCcksetzen")));
@@ -183,7 +194,7 @@ function Detail({a,b,data,onClose}){
 }
 
 // ─── Quiz ───
-function Quiz({initQ,data,setData,mode,onDone}){
+function Quiz({initQ,data,setData,mode,onDone,showTimer}){
   const mc=MODES[mode];
   const[q,setQ]=useState(initQ);
   const[idx,setIdx]=useState(0);
@@ -285,8 +296,8 @@ function Quiz({initQ,data,setData,mode,onDone}){
     h("div",{style:{fontSize:12,fontWeight:600,letterSpacing:1.5,color:phase==="retry"?"var(--c-orange)":mc.color,fontFamily:"'DM Sans',sans-serif",textTransform:"uppercase"}},
       phase==="retry"?"\uD83D\uDD04 Korrektur":(mc.icon+" "+mc.label)),
     h("div",{style:{display:"flex",alignItems:"center",gap:20,margin:"8px 0"}},
-      h(TimerCircle,{timeLeft:timeLeft,totalTime:mc.time}),
-      h("div",{key:idx,style:{fontSize:52,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)",animation:"fadeInUp .2s ease"}},a+" \u00D7 "+b)),
+      showTimer&&h(TimerCircle,{timeLeft:timeLeft,totalTime:mc.time}),
+      h("div",{key:idx,style:{fontSize:52,fontWeight:700,fontFamily:"'Fredoka',sans-serif",color:"var(--c-text)",animation:"fadeInUp .2s ease",textAlign:"center"}},a+" \u00D7 "+b)),
     h("div",{style:{fontSize:44,fontWeight:700,fontFamily:"'Fredoka',sans-serif",height:64,display:"flex",alignItems:"center",justifyContent:"center",
       color:fb==="ok"?"var(--c-green-text)":(fb==="no"||fb==="timeout")?"var(--c-red-text)":"var(--c-text)",
       background:fb==="ok"?"var(--c-green)":(fb==="no"||fb==="timeout")?"var(--c-red)":"var(--c-surface)",
@@ -332,9 +343,10 @@ function App(){
   const[scr,setScr]=useState("map");
   const[qq,setQq]=useState([]);
   const[det,setDet]=useState(null);
+  const[showTimer,setShowTimer]=useState(false);
   return h("div",{style:{minHeight:"100dvh",background:"var(--c-bg)"}},
-    scr==="map"&&h(Heatmap,{data,onStart:m=>{setQq(sprintQ(data,SPRINT_N));setScr(m);},onCell:(a,b)=>setDet([a,b])}),
-    (scr==="easy"||scr==="hard")&&h(Quiz,{key:scr+qq.length,initQ:qq,data,setData,mode:scr,onDone:()=>setScr("map")}),
+    scr==="map"&&h(Heatmap,{data,onStart:m=>{setQq(sprintQ(data,SPRINT_N));setScr(m);},onCell:(a,b)=>setDet([a,b]),showTimer,onToggleTimer:()=>setShowTimer(t=>!t)}),
+    (scr==="easy"||scr==="hard")&&h(Quiz,{key:scr+qq.length,initQ:qq,data,setData,mode:scr,onDone:()=>setScr("map"),showTimer}),
     det&&h(Detail,{a:det[0],b:det[1],data,onClose:()=>setDet(null)}));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(h(App));
